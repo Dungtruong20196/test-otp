@@ -1,89 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>OTP Detection Test Page</title>
-<style>
-  body{font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; padding:20px; color:#111}
-  h1{margin-bottom:0.2em}
-  h2{margin-top:24px}
-  .input-row{margin:8px 0; display:flex; align-items:center}
-  label{display:inline-block; width:280px; font-size:0.95em; color:#333}
-  input{padding:8px 10px; border-radius:6px; border:1px solid #cfcfcf; min-width:320px}
-  .note{color:#666; font-size:0.9em; margin-top:12px}
-  .section{padding:10px 0 18px 0; border-bottom:1px dashed #eee}
-  iframe{border:1px solid #ddd; width:100%; height:120px; margin-top:8px}
-</style>
+  <meta charset="UTF-8">
+  <title>Dummy Login with OTP (2-step)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #f4f4f4;
+    }
+    .box {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      width: 320px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background: #0073e6;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005bb5;
+    }
+  </style>
 </head>
 <body>
-  <h1>OTP Detection Test Page</h1>
-  <p class="note">Open this file in your browser (double-click the file or use <em>Open With → Chrome/Firefox</em>). 
-  If you see raw HTML code instead of the UI, follow the troubleshooting steps below.</p>
-
-  <div class="section">
-    <h2>Detected by <code>id</code></h2>
-    <div class="input-row"><label for="otp">id="otp"</label><input id="otp" type="text" placeholder='id="otp'></div>
-    <div class="input-row"><label for="totp">id="totp"</label><input id="totp" type="text" placeholder='id="totp"'></div>
-    <div class="input-row"><label for="totpPin">id="totpPin"</label><input id="totpPin" type="text" placeholder='id="totpPin"'></div>
-    <div class="input-row"><label for="code">id="code"</label><input id="code" type="text" placeholder='id="code"'></div>
-    <div class="input-row"><label for="pin">id="pin"</label><input id="pin" type="text" placeholder='id="pin"'></div>
-    <div class="input-row"><label for="2fa">id="2fa"</label><input id="2fa" type="text" placeholder='id="2fa"'></div>
-    <div class="input-row"><label for="authenticator">id="authenticator"</label><input id="authenticator" type="text" placeholder='id="authenticator"'></div>
-    <div class="input-row"><label for="one-time-password">id="one-time-password"</label><input id="one-time-password" type="text" placeholder='id="one-time-password"'></div>
+  <div class="box" id="step1">
+    <h2>Step 1: Login</h2>
+    <form onsubmit="goToStep2(event)">
+      <div class="form-group">
+        <label for="username">Username / Email</label>
+        <input type="text" id="username" name="username" autocomplete="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" autocomplete="current-password" required>
+      </div>
+      <button type="submit">Next</button>
+    </form>
   </div>
 
-  <div class="section">
-    <h2>Detected by <code>title</code></h2>
-    <div class="input-row"><label>title="OTP"</label><input title="OTP" type="text" placeholder='title="OTP"'></div>
-    <div class="input-row"><label>title="Totp"</label><input title="Totp" type="text" placeholder='title="Totp"'></div>
-    <div class="input-row"><label>title="2FA"</label><input title="2FA" type="text" placeholder='title="2FA"'></div>
-    <div class="input-row"><label>title="Authenticator"</label><input title="Authenticator" type="text" placeholder='title="Authenticator"'></div>
-    <div class="input-row"><label>title="One-Time Password"</label><input title="One-Time Password" type="text" placeholder='title="One-Time Password"'></div>
+  <div class="box" id="step2" style="display: none;">
+    <h2>Step 2: OTP Verification</h2>
+    <form>
+      <div class="form-group">
+        <label for="otp">One-Time Password (OTP)</label>
+        <input type="text" id="otp" name="otp" autocomplete="one-time-code" required>
+      </div>
+      <button type="submit">Verify & Login</button>
+    </form>
   </div>
 
-  <div class="section">
-    <h2>Detected by <code>name</code></h2>
-    <div class="input-row"><label>name="otp"</label><input name="otp" type="text" placeholder='name="otp"'></div>
-    <div class="input-row"><label>name="pin"</label><input name="pin" type="text" placeholder='name="pin"'></div>
-  </div>
-
-  <div class="section">
-    <h2>Detected by <code>aria-label</code></h2>
-    <div class="input-row"><label>aria-label="otp"</label><input aria-label="otp" type="text" placeholder='aria-label="otp"'></div>
-    <div class="input-row"><label>aria-label="one-time-password" (type=password)</label><input aria-label="one-time-password" type="password" placeholder='aria-label="one-time-password"'></div>
-  </div>
-
-  <div class="section">
-    <h2>Detected by <code>data-automation-id</code></h2>
-    <div class="input-row"><label>data-automation-id="otp"</label><input data-automation-id="otp" type="text" placeholder='data-automation-id="otp"'></div>
-    <div class="input-row"><label>data-automation-id="pin"</label><input data-automation-id="pin" type="text" placeholder='data-automation-id="pin"'></div>
-  </div>
-
-  <div class="section">
-    <h2>Negative / Control Cases</h2>
-    <div class="input-row"><label>id="randomInput"</label><input id="randomInput" type="text" placeholder='id="randomInput"'></div>
-    <div class="input-row"><label>title="verificationField"</label><input title="verificationField" type="text" placeholder='title="verificationField"'></div>
-    <div class="input-row"><label>name="customerCode"</label><input name="customerCode" type="text" placeholder='name="customerCode"'></div>
-  </div>
-
-  <div class="section">
-    <h2>Inside an iframe (srcdoc)</h2>
-    <p class="note">This iframe contains an input with id="otp" to test detection inside iframes.</p>
-    <iframe srcdoc='&lt;input id="otp" type="text" placeholder="iframe: id=otp"&gt;'></iframe>
-  </div>
-
-  <div class="section">
-    <h2>Troubleshooting</h2>
-    <ol>
-      <li>Make sure the file name ends with <code>.html</code> (not <code>.txt</code> or <code>.rtf</code>).</li>
-      <li>On Windows Notepad: use <em>Save as → All Files</em> and name <code>otp-test.html</code> and select UTF-8 encoding.</li>
-      <li>On macOS TextEdit: convert to Plain Text first (<em>Format → Make Plain Text</em>), then save with <code>.html</code> extension.</li>
-      <li>If you opened the file in an editor's preview, try opening it in the browser directly: <em>Right click → Open With → Chrome</em>.</li>
-      <li>If your server is serving the file with <code>Content-Type: text/plain</code>, serve it locally with: <code>python3 -m http.server 8000</code> and open <code>http://localhost:8000/otp-test.html</code>.</li>
-      <li>If you copied the HTML from a webpage that escaped tags (showing &lt; and &gt;), re-paste the raw HTML into a plain text file and save.</li>
-    </ol>
-    <p class="note">If you want, you can also open this page in an online editor like <a href="https://jsfiddle.net" target="_blank">JSFiddle</a> or <a href="https://codepen.io" target="_blank">CodePen</a>.</p>
-  </div>
+  <script>
+    function goToStep2(event) {
+      event.preventDefault();
+      document.getElementById('step1').style.display = 'none';
+      document.getElementById('step2').style.display = 'block';
+    }
+  </script>
 </body>
 </html>
